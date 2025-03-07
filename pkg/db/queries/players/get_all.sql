@@ -1,0 +1,11 @@
+SELECT
+    id,
+    name,
+    email,
+    account_balance
+FROM
+    players
+LIMIT
+    ?
+OFFSET
+    ?;

@@ -1,6 +1,7 @@
 package services
 
 import (
+	"app/pkg/db/queries"
 	"app/pkg/models"
 	"database/sql"
 	"errors"
@@ -10,7 +11,7 @@ import (
 func PlayersGet(db *sql.DB, limit int64, offset int64) ([]models.Player, error) {
 	var players []models.Player
 
-	rows, err := db.Query("SELECT id, name, email, account_balance FROM players LIMIT ? OFFSET ?", limit, offset)
+	rows, err := db.Query(queries.PlayerGetAll, limit, offset)
 	if err != nil {
 		return nil, fmt.Errorf("failed to select players, %s", err)
 	}
@@ -33,7 +34,7 @@ func PlayersGet(db *sql.DB, limit int64, offset int64) ([]models.Player, error) 
 func PlayersGetByID(db *sql.DB, id int64) (models.Player, error) {
 	var player models.Player
 
-	row := db.QueryRow("SELECT id, name, email, account_balance FROM players WHERE id = ?", id)
+	row := db.QueryRow(queries.PlayerGetByID, id)
 	err := row.Scan(&player.ID, &player.Name, &player.Email, &player.AccountBalance)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -58,7 +59,7 @@ func PlayerCreate(db *sql.DB, data PlayerCreateData) (models.Player, error) {
 	player.Email = data.Email
 	player.AccountBalance = data.AccountBalance
 
-	res, err := db.Exec("INSERT INTO players (name, email, account_balance) VALUES (?, ?, ?)", player.Name, player.Email, player.AccountBalance)
+	res, err := db.Exec(queries.PlayerInsert, player.Name, player.Email, player.AccountBalance)
 	if err != nil {
 		return player, fmt.Errorf("failed to insert player, %s", err)
 	}
