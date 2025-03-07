@@ -14,3 +14,8 @@ When you have everything set up run these commands (Make sure you are in the pro
 3. Run the app by running `make` if you have it installed or just type `go run ./cmd/main.go`
 
 > Note: To stop the database, from the same folder run `docker compose down`
+
+
+## TODO
+
+- [ ] Add unique constraint on players.email

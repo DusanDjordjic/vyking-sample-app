@@ -1,2 +1,2 @@
-GO_MIGRATE_DSN=Dusan2001:2001Dusan!@tcp(127.0.0.1:3306)/vyking
+GO_MIGRATE_DSN=Dusan2001:2001Dusan!@tcp(127.0.0.1:3306)/vyking?parseTime=true
 GO_MIGRATE_DRIVER=mysql

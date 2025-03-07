@@ -1,4 +1,4 @@
-package players_handlers
+package tournaments_handlers
 
 import (
 	"app/pkg/config"
@@ -13,8 +13,8 @@ import (
 	"go.uber.org/zap"
 )
 
-func GetPlayersHandler(w http.ResponseWriter, r *http.Request) {
-	log := logger.Log.Named("[GetPlayersHandler]")
+func GetTournamentsHandler(w http.ResponseWriter, r *http.Request) {
+	log := logger.Log.Named("[GetTournamentsHandler]")
 	log.Debug("started")
 
 	limit := utils.GetInt64QueryParamWithDefault(r, "limit", config.DEFAULT_LIMIT)
@@ -25,19 +25,19 @@ func GetPlayersHandler(w http.ResponseWriter, r *http.Request) {
 	offset = utils.ValidateOffset(offset)
 	log = log.With(zap.Int64("Offset", offset))
 
-	players, err := services.PlayersGet(db.DB, limit, offset)
+	tournaments, err := services.TournamentsGet(db.DB, limit, offset)
 	if err != nil {
-		log.Error("failed to get players", zap.Error(err))
+		log.Error("failed to get tournaments", zap.Error(err))
 		response.NewInternalError(w)
 		return
 	}
 
-	log = log.With(zap.Int("Count", len(players)))
+	log = log.With(zap.Int("Count", len(tournaments)))
 
-	dtos := models.PlayerDTOs(players)
+	dtos := models.TournamentDTOs(tournaments)
 	err = response.JSONResponse(w, http.StatusOK, dtos)
 	if err != nil {
-		log.Error("failed to send players response", zap.Error(err))
+		log.Error("failed to send tournaments response", zap.Error(err))
 		// Status code is already set in response.JSONResponse
 		return
 	}
@@ -45,22 +45,23 @@ func GetPlayersHandler(w http.ResponseWriter, r *http.Request) {
 	log.Debug("finished")
 }
 
-func GetPlayerByIDHandler(w http.ResponseWriter, r *http.Request) {
-	log := logger.Log.Named("[GetPlayerByIDHandler]")
+func GetTournamentByIDHandler(w http.ResponseWriter, r *http.Request) {
+	log := logger.Log.Named("[GetTournamentByIDHandler]")
 	log.Debug("started")
 
-	// /api/players/{id}
-	playerID, err := utils.GetInt64PathParameter(r.URL, 3)
+	// /api/tournaments/{id}
+	tournamentID, err := utils.GetInt64PathParameter(r.URL, 3)
 	if err != nil {
-		log.Warn("failed to get user id", zap.Error(err))
+		log.Warn("failed to get tournament id", zap.Error(err))
 		response.NewBadRequest(w)
 		return
 	}
-	log = log.With(zap.Int64("PlayerID", playerID))
 
-	player, err := services.PlayersGetByID(db.DB, playerID)
+	log = log.With(zap.Int64("TournamentID", tournamentID))
+
+	player, err := services.TournamentByIDGet(db.DB, tournamentID)
 	if err != nil {
-		log.Warn("failed to get player by id", zap.Error(err))
+		log.Warn("failed to get tournament by id", zap.Error(err))
 		// FIXME: parse the error and return 500 if something is wrong with database
 		response.NewNotFound(w)
 		return
@@ -68,7 +69,7 @@ func GetPlayerByIDHandler(w http.ResponseWriter, r *http.Request) {
 
 	err = response.JSONResponse(w, http.StatusOK, player.ToDTO())
 	if err != nil {
-		log.Error("failed to send player response", zap.Error(err))
+		log.Error("failed to send tournament response", zap.Error(err))
 		// Status code is already set in response.JSONResponse
 		return
 	}

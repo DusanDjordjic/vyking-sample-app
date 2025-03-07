@@ -13,8 +13,9 @@ func PlayersGet(db *sql.DB, limit int64, offset int64) ([]models.Player, error) 
 
 	rows, err := db.Query(queries.PlayerGetAll, limit, offset)
 	if err != nil {
-		return nil, fmt.Errorf("failed to select players, %s", err)
+		return nil, fmt.Errorf("failed to get players, %s", err)
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		v := models.Player{}
