@@ -1,10 +1,11 @@
 package config
 
 import (
-	"log"
+	"app/pkg/logger"
 	"os"
 
 	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 )
 
 type AppConfig struct {
@@ -14,7 +15,7 @@ type AppConfig struct {
 func Parse() AppConfig {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("failed to load env variables, error: %s", err)
+		logger.Log.Fatal("failed to load env variables", zap.Error(err))
 	}
 
 	dsn := os.Getenv("DB_DSN")
