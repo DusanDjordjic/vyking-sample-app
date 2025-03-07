@@ -5,31 +5,31 @@ import (
 )
 
 type errorResponse struct {
-	StatusCode int    `json:"-"`
-	Message    string `json:"message"`
+	StatusCode int      `json:"-"`
+	Errors     []string `json:"errors"`
 }
 
-func ErrorResponse(w http.ResponseWriter, status int, message string) {
-	if len(message) == 0 {
-		message = http.StatusText(status)
+func ErrorResponse(w http.ResponseWriter, status int, errs ...string) {
+	if len(errs) == 0 {
+		errs = append(errs, http.StatusText(status))
 	}
 
 	res := errorResponse{
 		StatusCode: status,
-		Message:    message,
+		Errors:     errs,
 	}
 
 	JSONResponse(w, res.StatusCode, res)
 }
 
-func NewInternalError(w http.ResponseWriter) {
-	ErrorResponse(w, http.StatusInternalServerError, "")
+func NewInternalError(w http.ResponseWriter, errs ...string) {
+	ErrorResponse(w, http.StatusInternalServerError, errs...)
 }
 
-func NewBadRequest(w http.ResponseWriter) {
-	ErrorResponse(w, http.StatusBadRequest, "")
+func NewBadRequest(w http.ResponseWriter, errs ...string) {
+	ErrorResponse(w, http.StatusBadRequest, errs...)
 }
 
-func NewNotFound(w http.ResponseWriter) {
-	ErrorResponse(w, http.StatusNotFound, "")
+func NewNotFound(w http.ResponseWriter, errs ...string) {
+	ErrorResponse(w, http.StatusNotFound, errs...)
 }

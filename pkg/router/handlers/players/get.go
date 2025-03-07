@@ -47,7 +47,6 @@ func GetPlayersHandler(w http.ResponseWriter, r *http.Request) {
 func GetPlayerByIDHandler(w http.ResponseWriter, r *http.Request) {
 	log := logger.Log.Named("[GetPlayerByIDHandler]")
 	log.Debug("started")
-	w.Write([]byte("GET USER BY ID USERS"))
 
 	// /api/users/{id}
 	playerID, err := utils.GetInt64PathParameter(r.URL, 3)
