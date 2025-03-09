@@ -5,7 +5,7 @@ Main logic is located in /pkg/router/handlers and /pkg/services other things are
 Queries are located in /pkg/db/queries and are placed into the binary on compile time with go:embed package.
 
 Services deal with database by making queries and executing procedures.
-I am not validating input data thats something that should be done
+I am not validating input data there, but thats something that should be done
 when the app gets more complicated and same service function is called from multiple places
 
 Handlers are function that accept the request, parse the payload if there is any, call service function and return the response.
