@@ -26,11 +26,6 @@ When you have everything set up run these commands (Make sure you are in the pro
 4. Run the app by running `make run` or `make`
 5. Stop the app by `CTRL+c` and then run `make clean` to stop the docker container and remove the volume
 
-## TODO
-
-- [ ] Add unique constraint on players.email
-
-
 ## Q&A
 
 ### QUESTION: What did you learn and if you encountered any challenges, how did you overcome them?
