@@ -88,6 +88,9 @@ func BetOnTournamentHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
+		// TODO: tournament id may be invalid, handle that error
+		// TODO: tournament isn't started yet or it has already ended
+
 		// Don't know what went wrong
 		response.NewInternalError(w)
 		return

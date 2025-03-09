@@ -17,14 +17,9 @@ if you don't check out this [link](https://docs.docker.com/engine/install/).
 
 When you have everything set up run these commands (Make sure you are in the project's root folder):
 
-One thing, I have a migration cli tool that I use to run all migrations but it works only for postgres now
-and I didn't have time to fix it so you will so you will have to execute them in some other client, I used [DBeaver](https://dbeaver.io/).
-DBeaver doen't force me to change delimiter when creating stored procedures so
-if you are using mysql cli or something else you'll have to do it.
-
 1. Start mysql database by running `docker compose up -d`, this will start mysql db in background and create a user that matches the DB_DSN in .env
-2. Run all "up" migrations from migrations folder to create all tables and stored procedures
-3. Run the app by running `make` if you have it installed or just type `go run ./cmd/main.go`
+2. Run all "up" migrations from migrations folder to create all tables and stored procedures by running `make migrate` or  `go run ./cmd/migrate/main.go`
+3. Run the app by running `make` if you have it installed or just type `go run ./cmd/server/main.go`
 
 > Note: To stop the database, from the same folder run `docker compose down`
 
