@@ -1,1 +1,1 @@
-DROP PROCEDURE CalcTurnamentEarnings;
+DROP PROCEDURE CalculateTurnamentWinnings;
