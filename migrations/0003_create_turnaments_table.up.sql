@@ -4,5 +4,5 @@ CREATE TABLE IF NOT EXISTS tournaments (
     prize DOUBLE NOT NULL,
     start_date DATETIME NOT NULL,
     end_date DATETIME NOT NULL,
-    CHECK (prize > 0)
+    CONSTRAINT positive_prize CHECK (prize > 0)
 );
