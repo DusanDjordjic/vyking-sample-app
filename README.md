@@ -19,10 +19,12 @@ if you don't check out this [link](https://docs.docker.com/engine/install/).
 > Note if you don't have make installed check Makefile for commands.
 
 When you have everything set up run these commands (Make sure you are in the project's root folder):
-1. Start mysql database by running `make db`, this will start mysql db in background and create a user that matches the DB_DSN in .env
-2. Wait couple of seconds for mysql to start and run `make migrate` to create all tables and stored procedures
-3. Run the app by running `make run` or `make`
-4. Stop the app by `CTRL+c` and then run `make clean` to stop the docker container and remove the volume
+
+1. From projects root run `go mod tidy` to install all needed packages
+2. Start mysql database by running `make db`, this will start mysql db in background and create a user that matches the DB_DSN in .env
+3. Wait couple of seconds for mysql to start and run `make migrate` to create all tables and stored procedures
+4. Run the app by running `make run` or `make`
+5. Stop the app by `CTRL+c` and then run `make clean` to stop the docker container and remove the volume
 
 ## TODO
 
