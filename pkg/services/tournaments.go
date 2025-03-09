@@ -93,3 +93,51 @@ func TournamentBetOn(db *sql.DB, data TournamentBetOnData) (models.TournamentBet
 
 	return bet, nil
 }
+
+func TournamentRankings(db *sql.DB, tournamentID int64) ([]models.TournamentRanking, error) {
+	rows, err := db.Query(queries.TournamentRanking, tournamentID)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+	var rankings []models.TournamentRanking
+
+	for rows.Next() {
+		v := models.TournamentRanking{}
+
+		err = rows.Scan(&v.PlayerID, &v.Prize)
+		if err != nil {
+			return nil, err
+		}
+
+		rankings = append(rankings, v)
+
+	}
+
+	return rankings, nil
+}
+
+func TournamentAllRankings(db *sql.DB) ([]models.TournamentRanking, error) {
+	rows, err := db.Query(queries.TournamentRankingAll)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+	var rankings []models.TournamentRanking
+
+	for rows.Next() {
+		v := models.TournamentRanking{}
+
+		err = rows.Scan(&v.PlayerID, &v.Prize)
+		if err != nil {
+			return nil, err
+		}
+
+		rankings = append(rankings, v)
+
+	}
+
+	return rankings, nil
+}
