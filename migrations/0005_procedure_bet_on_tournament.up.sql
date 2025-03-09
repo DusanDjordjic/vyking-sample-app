@@ -7,6 +7,8 @@ BEGIN
 	DECLARE t_end_date DATETIME;
 
 	-- If we couldn't get the tournament by id
+	-- this is also called when user doens't exist but
+	-- thats not really the problem because in real app user will have to be logged in to place a bet
 	DECLARE EXIT HANDLER FOR NOT FOUND
 	BEGIN
 		ROLLBACK;
@@ -59,9 +61,6 @@ BEGIN
 	-- check if turnament is started or not
 	SELECT start_date, end_date INTO t_start_date, t_end_date FROM tournaments
 	WHERE id = tournament_id;
-
-
-	SELECT t_start_date, t_end_date;
 
 	IF t_start_date > CURRENT_TIMESTAMP THEN
 		ROLLBACK;

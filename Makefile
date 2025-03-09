@@ -2,6 +2,11 @@
 run:
 	go run ./cmd/server/main.go
 
+.PHONY: db
+db:
+	docker compose up -d
+
+
 .PHONY: migrate
 migrate:
 	go run ./cmd/migrate/main.go -migrationsFolder migrations

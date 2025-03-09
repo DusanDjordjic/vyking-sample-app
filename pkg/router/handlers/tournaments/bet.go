@@ -79,11 +79,21 @@ func BetOnTournamentHandler(w http.ResponseWriter, r *http.Request) {
 
 	newBet, err := services.TournamentBetOn(db.DB, data)
 	if err != nil {
-		log.Warn("failed to create bet", zap.Error(err))
+		log.Warn("failed to create a bet", zap.Error(err))
 		if mysqlErr, ok := err.(*mysql.MySQLError); ok {
 			sqlState := string(mysqlErr.SQLState[:])
-			if sqlState == "45001" {
+			switch sqlState {
+			case "45001":
 				response.NewBadRequest(w, "insufficient funds")
+				return
+			case "45002":
+				response.NewBadRequest(w, "tournament doesn't exist")
+				return
+			case "45003":
+				response.NewBadRequest(w, "tournament hasn't started yet")
+				return
+			case "45004":
+				response.NewBadRequest(w, "tournament has already ended")
 				return
 			}
 		}
