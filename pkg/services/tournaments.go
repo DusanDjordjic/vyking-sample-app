@@ -75,3 +75,21 @@ func TournamentCreate(db *sql.DB, data TournamentCreateData) (models.Tournament,
 
 	return tournament, nil
 }
+
+type TournamentBetOnData struct {
+	TournamentID int64
+	PlayerID     int64
+	Amount       float64
+}
+
+func TournamentBetOn(db *sql.DB, data TournamentBetOnData) (models.TournamentBet, error) {
+	row := db.QueryRow("CALL BetOnTournament(?, ?, ?)", data.PlayerID, data.TournamentID, data.Amount)
+	bet := models.TournamentBet{}
+
+	err := row.Scan(&bet.ID, &bet.CreatedAt, &bet.PlayerID, &bet.TournamentID, &bet.Amount)
+	if err != nil {
+		return bet, err
+	}
+
+	return bet, nil
+}

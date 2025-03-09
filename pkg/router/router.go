@@ -14,4 +14,5 @@ func SetupRouter(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/tournaments", tournaments_handlers.GetTournamentsHandler)
 	mux.HandleFunc("GET /api/tournaments/{id}", tournaments_handlers.GetTournamentByIDHandler)
 	mux.HandleFunc("POST /api/tournaments", tournaments_handlers.CreateTournamentHandler)
+	mux.HandleFunc("POST /api/tournaments/{id}/bet", tournaments_handlers.BetOnTournamentHandler)
 }
