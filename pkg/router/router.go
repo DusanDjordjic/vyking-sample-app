@@ -10,6 +10,7 @@ func SetupRouter(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/players", players_handlers.GetPlayersHandler)
 	mux.HandleFunc("GET /api/players/{id}", players_handlers.GetPlayerByIDHandler)
 	mux.HandleFunc("POST /api/players", players_handlers.CreatePlayerHandler)
+	mux.HandleFunc("PATCH /api/players/{id}", players_handlers.UpdatePlayerAccountBalanceHandler)
 
 	mux.HandleFunc("GET /api/tournaments", tournaments_handlers.GetTournamentsHandler)
 	mux.HandleFunc("GET /api/tournaments/{id}", tournaments_handlers.GetTournamentByIDHandler)

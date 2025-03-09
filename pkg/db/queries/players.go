@@ -12,3 +12,6 @@ var PlayerGetByID string
 
 //go:embed players/insert.sql
 var PlayerInsert string
+
+//go:embed players/update_balance.sql
+var PlayerUpdateBalance string

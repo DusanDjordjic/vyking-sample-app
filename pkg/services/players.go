@@ -74,3 +74,26 @@ func PlayerCreate(db *sql.DB, data PlayerCreateData) (models.Player, error) {
 
 	return player, nil
 }
+
+type PlayerUpdateData struct {
+	PlayerID       int64
+	AccountBalance float64
+}
+
+func PlayerUpdate(db *sql.DB, data PlayerUpdateData) error {
+	res, err := db.Exec(queries.PlayerUpdateBalance, data.AccountBalance, data.PlayerID)
+	if err != nil {
+		return fmt.Errorf("failed to insert player, %s", err)
+	}
+
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("failed to get rows affected, %s", err)
+	}
+
+	if rowsAffected == 0 {
+		return fmt.Errorf("plyare with id %d doesn't exist", data.PlayerID)
+	}
+
+	return nil
+}
